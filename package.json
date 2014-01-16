@@ -1,6 +1,6 @@
 {
   "name": "lessobjectify",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Browserify/dcompose transform to convert LESS into an JSON object",
   "main": "index.js",
   "dependencies": {
