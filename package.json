@@ -1,11 +1,12 @@
 {
-  "name": "cssobjectify",
-  "version": "0.2.0",
-  "description": "Browserify/dcompose transform to convert CSS into an JSON object",
+  "name": "lessobjectify",
+  "version": "0.1.0",
+  "description": "Browserify/dcompose transform to convert LESS into an JSON object",
   "main": "index.js",
   "dependencies": {
     "css-parse": "~1.6.0",
     "through": "~2.3.4",
+    "less": "~1.5.1",
     "to-camel-case": "~0.2.0"
   },
   "devDependencies": {
@@ -19,16 +20,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "andreypopp/cssobjectify"
+    "url": "arsemyonov/lessobjectify"
   },
   "keywords": [
     "browserify",
     "dcompose",
     "dgraph",
     "css",
+    "less",
     "json",
     "react"
   ],
   "author": "Andrey Popp <8mayday@gmail.com>",
+  "contributors": [
+    "Artyom Semyonov <sevenov@gmail.com>"
+  ],
   "license": "MIT"
 }

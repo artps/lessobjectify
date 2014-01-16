@@ -2,7 +2,7 @@ var browserify = require('browserify'),
     assert = require('assert'),
     vm = require('vm'),
     path = require('path'),
-    cssobjectify = require('../index');
+    lessobjectify = require('../index');
 
 function fixture(name) {
   return path.join(__dirname, name);
@@ -12,7 +12,7 @@ function bundle(name, cb) {
   var filename = fixture(name);
   browserify()
     .require(filename, {expose: name})
-    .transform(cssobjectify)
+    .transform(lessobjectify)
     .bundle(function(err, bundle) {
       if (err) return cb(err);
       var sandbox = {};
@@ -25,19 +25,18 @@ function bundle(name, cb) {
     });
 }
 
-describe('cssobjectify', function() {
+describe('lessobjectify', function() {
+  var comment, hiddenComment;
+  before(function() {
+    comment = { display: 'block' };
+    hiddenComment = { display: 'none' };
+  });
   it('transforms stylesheets into JSON objects', function(done) {
-    bundle('styles.css', function(err, bundle) {
+    bundle('styles.less', function(err, bundle) {
       if (err) return done(err);
-      var styles = bundle.require('styles.css');
-      assert.deepEqual(styles.Component, {
-        fontSize: '12px',
-        WebkitTransform: 'yeah'
-      });
-      assert.deepEqual(styles.AnotherComponent, {
-        backgroundColor: 'red',
-        display: 'none'
-      });
+      var styles = bundle.require('styles.less');
+      assert.deepEqual(styles['.b-comments__comment'], comment);
+      assert.deepEqual(styles['.b-comments__comment--hidden'], hiddenComment);
       done();
     });
   });
@@ -46,14 +45,8 @@ describe('cssobjectify', function() {
     bundle('app.js', function(err, bundle) {
       if (err) return done(err);
       var styles = bundle.require('app.js');
-      assert.deepEqual(styles.Component, {
-        fontSize: '12px',
-        WebkitTransform: 'yeah'
-      });
-      assert.deepEqual(styles.AnotherComponent, {
-        backgroundColor: 'red',
-        display: 'none'
-      });
+      assert.deepEqual(styles['.b-comments__comment'], comment);
+      assert.deepEqual(styles['.b-comments__comment--hidden'], hiddenComment);
       done();
     });
   });
